@@ -562,6 +562,8 @@ Add these tokens to `css/tokens.css`. They are used only by Screen 2 and by the 
 > ```
 >
 > `--gd-night-warm` is a warm charcoal: related to `--gd-night` (Screen 2) but not identical, and sharing the warmth of the Screen 1 umber veil. Measured contrast on `--gd-night-warm`: `--gd-night-text` 14.6:1, `--gd-night-text-2` 8.2:1, `--gd-night-text-3` 4.4:1 (large text and non-text only), `--gd-gold` 5.1:1. On `--gd-night-warm-surface`: `--gd-night-text` 12.7:1, `--gd-night-text-2` 7.4:1, `--gd-gold` 4.4:1, so gold carries no small text on the panel surface, only glyphs and large text.
+>
+> **Approved by the user on 2026-10-01 (task A10).** One more Screen 2b token, in the same dark accent block: `--gd-shadow-night-panel: 0 24px 60px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);` — the request panel's depth over the photo, Screen 2b only. Screen 2b also carries the connection glows of 16.9 (phone halo, thread, nodes, particle, switch pulse); the "no glow effects" rule below therefore applies to Screen 2 only. Built values measured with the tokens above: `--gd-night-warm` #23201D, `--gd-night-warm-surface` #2E2A27; `--gd-night-text` 14.65:1 / 12.81:1, `--gd-night-text-2` 8.20:1 / 7.40:1, `--gd-gold` 5.05:1 / 4.42:1.
 
 Rules for the dark screens (both Screen 2 and Screen 2b):
 
@@ -631,6 +633,8 @@ Approved with the Screen 3 rework (visual target `references/screen-3-target.png
 
 > **Approved by the user on 2026-10-01 — extended to Screen 2a.** The connection visuals above also apply on Screen 2a, from 1200px up, as gold threads between the memory panel, Gia's tablet in the photo and the quote card. Screen 2a uses the same glow colour (it declares the same `--gd-connect-glow` value on its own section), the same 12px ringed nodes with a pulse ring and the same travelling 6px particle. Its threads are 1.5px rather than 2px, since they run over a photograph and sit close together; otherwise they follow the line rules above (`--gd-gold`, round caps, one `drop-shadow(0 0 4px …)` on the thread layer). Threads never cross a face or Gia on the tablet screen, and they are hidden wherever the cards leave the photo (below 1200px). Icon circles and the orbit decoration remain Screen 3 only. Geometry and timing are in build spec Section 5.2a ("Screen 2a rework").
 
+> **Approved by the user on 2026-10-01 — extended to Screen 2b.** The connection visuals also apply on the dark Screen 2b, with the same line weight, glow and node style as Screen 2a: one 1.5px `--gd-gold` thread with round caps and one `drop-shadow(0 0 4px …)` in the shared glow colour (Screen 2b declares the same `--gd-connect-glow` value on its own section), joining a 12px ringed node on the phone in the man's hand to a 12px ringed node on the request panel's top border, plus the travelling 6px particle. Added for Screen 2b only: a soft radial `--gd-gold` halo on the phone, `mix-blend-mode: screen`, made of two layers in one element: an outer glow about 260px across (`--gd-gold` at 60% at its centre, max opacity .6) and a brighter inner core about 90px across (`--gd-gold` at 45%); it pulses once (`scale 1 → 1.8`) on entry and each time the particle arrives (raised by the user on 2026-10-02). It never reaches the man's face: it stays 260px except where it or its 1.8× pulse would touch the face, where it shrinks (the core keeps its ratio); measured sizes are in build spec 5.2b, a 2px `--gd-gold` scan line across each request row, and one soft gold glow pulse on each switch track as it turns on. The thread never crosses the man's face; it exists only while photo and panel sit side by side (1200px and up); stacked, the halo stays and the thread and nodes are dropped. Icon circles and the orbit decoration remain Screen 3 only. Geometry and timing are in build spec Section 5.2b ("Screen 2b richer treatment").
+
 ### 16.10 Screens 2a and 2b photographs and product panels (approved 2026-10-01)
 
 Applies only to Screen 2a (photo, memory panel, quote card) and Screen 2b (photo, request panel, avatar, controls). Geometry, copy and timing are in build spec Sections 5.2a and 5.2b.
@@ -654,3 +658,13 @@ Applies only to Screen 2a (photo, memory panel, quote card) and Screen 2b (photo
 > - **Gia avatar (2a).** `media/gia-avatar.webp` as a 40px circle with a 2px `--gd-gold` ring, in the role row of the 2a quote card. The 2b avatar keeps its 32px size and 1px `--gd-gold-line` ring.
 > - **Gold threads (2a).** Permitted on Screen 2a under 16.9.
 > - Photos: the 2a photo's entry scale-in is `1.08 → 1` (2b keeps `1.04 → 1`).
+
+> **Approved by the user on 2026-10-01 — Screen 2b richer treatment (task A10).** For Screen 2b only, replacing the 2b values above:
+>
+> - **Request panel (2b).** `--gd-night-warm-surface`, 1px `--gd-gold-line` border, radius 8px, a 3px `--gd-gold` bar along the top edge inside the radius, `box-shadow: var(--gd-shadow-night-panel)`. Still solid, no blur, no gradient fill; maximum width 420px on the photo, 480px at most anywhere.
+> - **Gia avatar (2b).** 40px circle with a 2px `--gd-gold` ring, as on 2a (replaces the 32px / 1px `--gd-gold-line` avatar).
+> - **Quote card on dark (2b).** `--gd-night-warm` background, 1px `--gd-gold-line` border, role label `GIA` in `--gd-gold`, quote in `--gd-night-text`.
+> - **Withheld rows (2b).** Once a row's status shows it is not shared, its item text dims to `--gd-night-text-2` and a 1px `--gd-night-text-3` line is drawn through it (300ms, left to right). Row 1's check glyph is `--gd-gold`.
+> - **Text column (2b).** Key line in `--gd-gold`; a 48px × 1px `--gd-gold` rule 24px above the H2.
+> - **Glows (2b).** Phone halo, thread, nodes, particle, row scan line and switch glow pulse, as in 16.9.
+> - Photos: the 2b photo's entry scale-in is also `1.08 → 1`. Two-column crop `object-position: 90% 30%`; the stacked band is full width with `max-height: max(80svh, 72vw)` (approved 2026-10-02, build spec 5.2b).

@@ -439,6 +439,47 @@ Reduced motion: everything visible at rest; the switches still toggle, without t
 - 768px and below (and whenever stacked): one column. The text column first, with section padding `var(--gd-section-pad-compact)` on top and 48px at the bottom. Then the photo as a full-bleed band, `aspect-ratio: 4 / 5` capped at `max-height: 80svh`, `object-position: 50% 25%`. The request panel leaves the photo and sits under it inside the page padding, overlapping the photo's bottom edge by 48px (`margin-top: -48px`, `position: relative`), with 72px section padding below it. Switch rows keep the label left and the switch right at every width.
 - Verify at 1920, 1440, 1200, 1024, 768 and 375 that the man's face and the phone are never covered or cropped out.
 
+> **Approved by the user on 2026-10-01 (task A10) — Screen 2b richer treatment.** The user rejected the first, restrained version of Screen 2a as pale and static, so Screen 2b is built with the same richer treatment from the start. The changes below apply to Screen 2b only and override the conflicting parts of this section. The copy is unchanged.
+>
+> **Contrast and depth.** New token `--gd-shadow-night-panel` (design-system 16.1).
+>
+> - Request panel: background `--gd-night-warm-surface`, 1px `--gd-gold-line` border, a 3px `--gd-gold` bar along its top edge (a background layer, so the radius clips it), `box-shadow: var(--gd-shadow-night-panel)` (`0 24px 60px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35)`).
+> - Gia's quote card: avatar 40px circle with a 2px `--gd-gold` ring (as on 2a), role label `GIA` in `--gd-gold`, 1px `--gd-gold-line` border, `--gd-night-warm` background.
+> - Row 1 status: check glyph in `--gd-gold`. Rows 2 and 3: once their status appears, the item text dims to `--gd-night-text-2` and a 1px `--gd-night-text-3` line draws through it left to right (300ms, `transform: scaleX`). The strike line needs the item on one line, so a request row may wrap: where the item and its status do not fit side by side, the status moves under the item, still right-aligned (row 1 below 768px; all three rows at 320px). Every item stays on one line from 320px up.
+> - Text column: the key line in `--gd-gold`; a 48px-wide 1px `--gd-gold` rule 24px above the H2.
+> - Measured contrast: on `--gd-night-warm` (#23201D) `--gd-night-text` 14.65:1, `--gd-night-text-2` 8.20:1, `--gd-gold` 5.05:1 (key line, quote-card `GIA` label); on `--gd-night-warm-surface` (#2E2A27) `--gd-night-text` 12.81:1, `--gd-night-text-2` 7.40:1 (panel label, dimmed items, withheld statuses), `--gd-gold` 4.42:1 (check glyph only, non-text). `--gd-night-text-3` carries no text (strike line, off-switch thumb). Switch on: `--gd-night` thumb on `--gd-gold` 5.55:1.
+>
+> **Gold glow and thread** (design-system 16.9 extended to Screen 2b).
+>
+> - Phone halo (raised by the user on 2026-10-02; the first 180px / .35 halo read too faint): two radial `--gd-gold` layers in one element with `mix-blend-mode: screen` — an outer glow about 260px across, `--gd-gold` at 60% at its centre fading to transparent at its edge (max opacity .6), and a brighter inner core about 90px across (radius 45px), `--gd-gold` at 45%, fading to transparent. The alphas sit in the layers, so the element's opacity runs 0 → 1. To keep it off the man's face, the halo is 260px except where it or its 1.8× pulse would reach the face box (30–68% of the image width, 10–42% of its height, hair included): there the size is `2 × distance to the face box ÷ 1.8`, measured with the phone point; the core keeps its 45/260 ratio. Measured sizes: 260px at 1920, 1440, 1199 and 1024 (stacked); 239px at 1200; 238px at 768; 114px at 375. Clearance between the full pulse edge and the face box: 50px at 1920, 14px at 1440, 53px at 1024, at least 0px elsewhere (at rest the halo edge is 46–207px from the face box). Centred on the phone at **87% of the image width and 59% of its height**. Measured on the image, the phone spans 77.5–97% of the width and 51.8–67.5% of the height (top-left corner at 82.6% / 52.5%; the left edge leans down to 79.5% / 58% before the fingers cover it). The point is mapped through the `object-fit: cover` crop; recomputed after the image and fonts load and on resize (debounced 150ms). Inside the photo column, which clips it.
+> - Thread: one cubic curve from a 12px ringed node on the phone's left edge (**81.6% / 55.5%**) to a 12px ringed node centred on the request panel's top border, 40px from its right edge (an HTML node inside the panel). It leaves the phone horizontally and arrives on the border from above; 1.5px `--gd-gold`, round caps, one `drop-shadow(0 0 4px)` in the shared glow colour. Decorative SVG (`aria-hidden`, `pointer-events: none`) in the photo's grid cell, above the photo and below the panel. It never crosses the face (verified at 1920, 1440 and 1200; at least 89px below the chin).
+> - Only in the two-column layout. Stacked: the halo stays, the thread and both nodes are dropped.
+>
+> **Layout fixes** (approved by the user on 2026-10-02; the geometry above broke this section's own rule that the face and phone are never covered or cropped).
+>
+> - Two columns from **1200px** up only; below 1200px the stacked layout applies (the 2a breakpoint). Measured: below about 1175px the 420px panel on the photo covers the phone, and narrowing it pushes it up into the face. This replaces the 1100–769px rule above.
+> - Two-column photo: `object-position: 90% 30%` (was `50% 30%`, which cropped 39–63px off the phone's right side at 1440, 1200 and 1024). Only blurred background on the left is cropped; the face stays at least 95px from the column edge at 1200.
+> - Stacked photo band: `width: 100%` and `max-height: max(80svh, 72vw)` (was `80svh`; 72vw confirmed by the user on 2026-10-02). On landscape tablets an 80svh band is too short to hold both the face and the phone; portrait tablets and phones are unchanged.
+> - The panel, photo and thread share one grid cell (`grid-column: 1; grid-row: 1`; the panel `align-self: end; justify-self: start; margin: 32px`), so the panel is not clipped by the photo column.
+>
+> **Motion** (`js/gia-side.js`), triggered once when the photo column is 25% visible:
+>
+> | Time | Event |
+> |---:|---|
+> | 0.0s | Photo `opacity 0 → 1`, `scale 1.08 → 1`, 1600ms, design-system ease |
+> | 0.6s | Phone halo fades in (element opacity `0 → 1`, 400ms) |
+> | 1.0s | One halo pulse (a copy of the halo, `scale 1 → 1.8`, element opacity `1 → 0`, i.e. from the halo's full .6 / .45 layers, 900ms); the phone node pops in (`back.out(2.5)`); the thread draws from the phone to the panel (`stroke-dashoffset`, 700ms) |
+> | 1.5s | Request panel `opacity 0 → 1`, `y: 32 → 0`, `scale .97 → 1`, 700ms; its top node pops in at 1.7s, as the thread arrives |
+> | 2.2s, 2.9s, 3.6s | Rows 1–3: the item appears (300ms); a 2px `--gd-gold` scan line sweeps across the row left to right (400ms) and fades (150ms); at +0.45s the status pops in (`opacity 0 → 1`, `scale .8 → 1`, `back.out(2)`); for rows 2–3 the dim and strike-through follow at +0.75s |
+> | 4.4s | Quote card `opacity 0 → 1`, `y: 16 → 0`, 600ms, avatar with it |
+>
+> - Text column: shared reveal. Switches: when the controls list is 35% visible, they turn on one after another, 200ms apart (thumb slides, track fills gold, one soft gold glow pulse on the track). With JavaScript and motion they start off; `aria-checked` is set together with the visual state at every step. Without JavaScript they render on. A switch the member has already clicked is not changed by this sequence.
+> - Ambient, only while the section is visible (paused off-screen): every 4s a 6px glowing `--gd-gold` particle travels along the thread from the panel to the phone (1.2s, `getPointAtLength`); the halo pulses once (`scale 1 → 1.8`) when it arrives. Two-column layout only.
+> - Interaction: turning `What she can share` off changes row 1's status from `Shared` to `Not shared` (cross glyph, `--gd-night-text-2`, the row dims and is struck through like rows 2–3); turning it back on restores `Shared`. Row 1's status element is `aria-live="polite"`. The other switches only toggle. Nothing is saved or sent.
+> - Reduced motion: everything at rest, thread drawn, halo static, no particle, no pulses, no scan lines; switches toggle instantly (no transition) and the share interaction still works.
+>
+> This replaces the animation table above and the "no ambient loop" rule for Screen 2b.
+
 ---
 
 ### 5.3 Screen 3 — Everything connects
@@ -865,8 +906,8 @@ Weight budget: videos ~15.8MB (hero ~5.5MB, walk ~10.3MB), brochure images ~0.7M
 
 1. Pinned sections: Screen 1 and Screen 4 only. No parallax, no scroll hijacking, no scroll snapping, no page-level horizontal scroll.
 2. All scroll-driven motion is a pure function of progress and fully reversible on upward scroll.
-3. One `requestAnimationFrame` loop per pinned screen, started when its section is within one viewport of the visible area and stopped when it is further away. Ambient loops on Screens 2 and 3 pause off-screen. (Screen 2b has no ambient loop. Approved 2026-10-01: Screen 2a has one, the thread particle, which also pauses off-screen.)
-4. Animate `transform` and `opacity` only (plus `stroke-dashoffset` for Screen 3 lines and Screen 2a threads and `scaleY`/`scaleX` for rails and progress). Never animate layout properties.
+3. One `requestAnimationFrame` loop per pinned screen, started when its section is within one viewport of the visible area and stopped when it is further away. Ambient loops on Screens 2 and 3 pause off-screen. (Approved 2026-10-01: Screens 2a and 2b each have one, a thread particle, which also pauses off-screen.)
+4. Animate `transform` and `opacity` only (plus `stroke-dashoffset` for Screen 3 lines and the Screen 2a and 2b threads, and `scaleY`/`scaleX` for rails and progress). Never animate layout properties.
 5. `prefers-reduced-motion: reduce`: complete, readable, static composition on every screen as specified per screen.
 6. Semantics: one `<h1>` (Screen 1). `<h2>` per screen. `<h3>` for Screen 2 rail phrases, Screen 3 areas, and Screen 4 modules. Links that navigate are `<a>`; controls that open brochures are `<button>`. **Approved (2026-10-01):** the Screen 2b switches are `<button type="button" role="switch" aria-checked>`, each labelled by its row text; the 2a and 2b panels are `<figure>` elements with a visually hidden `<figcaption>`.
 7. Keyboard: visible focus rings, logical tab order, no positive `tabindex`, no focus on invisible content (`inert` rules above).
@@ -884,7 +925,7 @@ Weight budget: videos ~15.8MB (hero ~5.5MB, walk ~10.3MB), brochure images ~0.7M
 - [ ] Screen 1 scrubs smoothly, text blocks never overlap, block 3 and `Meet Gia` hold to the end, the button is only interactive when visible.
 - [ ] Screen 2 is the only dark section; its rail completes once and its ambient dot pauses off-screen. (Since 2026-10-01: Screens 2 and 2b are the only dark sections and are never adjacent.)
 - [ ] Screen 2a memory rows appear in order with their threads, rows 2–4 highlight before the quote card, the outcome line appears sentence by sentence; from 1200px up the only loop is the thread particle, paused off-screen.
-- [ ] Screen 2b request rows resolve in order, no red is used, the switches toggle by mouse, touch and keyboard (Space and Enter) and announce their state; nothing is saved.
+- [ ] Screen 2b request rows resolve in order, no red is used, the switches toggle by mouse, touch and keyboard (Space and Enter) and announce their state; `What she can share` switches row 1 between `Shared` and `Not shared`; nothing is saved; the thread particle pauses off-screen.
 - [ ] Screen 3 areas appear in order 1–5, lines stay attached to the tablet at every width above 1100px, and the stacked layout replaces lines below it.
 - [ ] Screen 4 matches the reference mechanics: scrubbed walking video, chapters on one continuous track entering from the right and exiting to the left, progress line, counter, simulated pull-back, final CTA with no exit. Chapter cards cross Gia's safe band only while moving; the final CTA card at rest stays clear of it.
 - [ ] Every module button under the text opens its brochure; the panel slides in from the right leaving a strip of the story visible, media column fixed, body column scrolling; copy matches 5.4a.3; story freezes while open; Escape/backdrop/close work; focus returns; scroll position is restored exactly.
@@ -957,5 +998,5 @@ Added on 2026-10-01:
 
 7. Screens 2a and 2b (Sections 5.2a and 5.2b): copy, order, photo-led layout, photos and the second dark accent screen approved 2026-10-01. Usage rights for the two new photos (made from the Gia brochure images) to be confirmed, as for item 3.
 8. Legal review of the Screen 2b small print `Glonari is designed to create value with its members, not sell their private profiles.` If it is not cleared, the line is removed; the screen works without it.
-9. Navigation: approved 2026-10-01, see Section 5.5. The fifth link `Your control` → `#screen-side` is added with Screen 2b.
+9. Navigation: approved 2026-10-01, see Section 5.5. The fifth link `Your control` → `#screen-side` was added with Screen 2b (task A10) in the header and the footer. Checked at 1101, 1150, 1200 and 1280: the five links stay on one row, at least 98px from the logo and 48px from `Talk to Gia`; the 1100px hamburger breakpoint is unchanged.
 10. Re-measure contrast of Screen 1 blocks 2 and 3 against the warm veil (open since the 2026-10-01 veil change).
