@@ -10,7 +10,7 @@
    on resize (debounced 150ms) - never per frame.
    When the photo column is 25% visible, once: photo, halo and pulse, phone
    node, thread, panel, rows 1-3 (item, scan line, status; rows 2-3 then
-   dim and strike through), quote card. Then, while the section is
+   dim), quote card. Then, while the section is
    visible, a particle travels along the thread from the panel to the
    phone every 4s and the halo pulses (1.8x) as it arrives.
    Switches: on without JavaScript. With motion they start off and turn on
@@ -285,7 +285,8 @@ function initGiaSide(sectionEl) {
       }, at);
       tl.to(scans[i], { opacity: 0, duration: 0.15, ease: "none" }, at + 0.4);
       tl.to(statuses[i], { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, at + 0.45);
-      // The 300ms dim and strike-through are CSS transitions on the item.
+      // The 300ms dim is a CSS transition on the item (no strike-through:
+      // that marks only the member's own refusal on row 1).
       if (row !== shareRow) tl.call(() => row.classList.add("is-withheld"), null, at + 0.75);
     });
 

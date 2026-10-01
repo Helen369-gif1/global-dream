@@ -672,7 +672,7 @@ Applies only to Screen 2a (photo, memory panel, quote card) and Screen 2b (photo
 > - **Request panel (2b).** `--gd-night-warm-surface`, 1px `--gd-gold-line` border, radius 8px, a 3px `--gd-gold` bar along the top edge inside the radius, `box-shadow: var(--gd-shadow-night-panel)`. Still solid, no blur, no gradient fill; maximum width 420px on the photo, 480px at most anywhere.
 > - **Gia avatar (2b).** 40px circle with a 2px `--gd-gold` ring, as on 2a (replaces the 32px / 1px `--gd-gold-line` avatar).
 > - **Quote card on dark (2b).** `--gd-night-warm` background, 1px `--gd-gold-line` border, role label `GIA` in `--gd-gold`, quote in `--gd-night-text`.
-> - **Withheld rows (2b).** Once a row's status shows it is not shared, its item text dims to `--gd-night-text-2` and a 1px `--gd-night-text-3` line is drawn through it (300ms, left to right). Row 1's check glyph is `--gd-gold`.
+> - **Withheld rows (2b).** Once a row's status shows it is not shared, its item text dims to `--gd-night-text-2` (300ms). Only a row the member withholds (row 1, when `What she can share` is off) is also struck through, with a 1px `--gd-night-text-3` line drawn left to right (300ms); rows Gia withholds by her own judgement (rows 2 and 3) are dimmed, never struck through (approved by the user on 2026-10-02). Row 1's check glyph is `--gd-gold`.
 > - **Text column (2b).** Key line in `--gd-gold`; a 48px × 1px `--gd-gold` rule 24px above the H2.
 > - **Glows (2b).** Phone halo, thread, nodes, particle, row scan line and switch glow pulse, as in 16.9.
 > - Photos: the 2b photo's entry scale-in is also `1.08 → 1`. Two-column crop `object-position: 90% 30%`; the stacked band is full width with `max-height: max(80svh, 72vw)` (approved 2026-10-02, build spec 5.2b).
