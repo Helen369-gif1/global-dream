@@ -84,7 +84,7 @@ Add these tokens to `css/tokens.css`. Reuse them instead of repeating raw values
   --gd-line-soft: rgba(91, 72, 49, 0.12);
   --gd-shadow-soft: 0 14px 40px rgba(57, 43, 24, 0.08);
   --gd-shadow-tablet: 0 24px 48px rgba(57, 43, 24, 0.14); /* drop-shadow() on the Screen 3 tablet image only */
-  --gd-shadow-card: 0 18px 48px rgba(57, 43, 24, 0.18), 0 2px 6px rgba(57, 43, 24, 0.10); /* Screen 2a memory panel and quote card only (approved 2026-10-01) */
+  --gd-shadow-card: 0 18px 48px rgba(57, 43, 24, 0.18), 0 2px 6px rgba(57, 43, 24, 0.10); /* Screens 2a (memory panel and quote card, approved 2026-10-01) and 4 (chapter cards, approved 2026-10-02) only */
 
   /* Type — unchanged */
   --gd-font-ui: "IBM Plex Sans", system-ui, sans-serif;
@@ -596,6 +596,14 @@ Screen 1 (hero scrub) and Screen 4 (horizontal story) are the two approved pinne
 ### 16.6 Screen 4 module button dot
 
 The four Screen 4 module buttons (brochure triggers) carry a trailing 6px `--gd-gold` dot as a decorative mark. It is the only decorative mark permitted inside a button.
+
+> **Approved by the user on 2026-10-02 — Screen 4 chapter cards.** For the four chapter cards (`.gd-module`) only; the final CTA card keeps the shared surface, border and no shadow.
+>
+> - **Surface.** Unchanged: `--gd-surface` at 92%, no blur. This is the one translucent card on the page (16.10's "always solid" applies to Screens 2a and 2b only).
+> - **Border and bar.** 1px `--gd-gold-line` border and a 3px `--gd-gold` bar along the top edge, clipped by the 8px radius.
+> - **Depth.** `var(--gd-shadow-card)` plus a contact shadow `0 10px 30px` in `--gd-night` at 22%. This overrides "no shadow by default" (Section 8.1) for these cards; `--gd-shadow-card` is no longer Screen 2a only.
+> - **Learn more button.** 1px `--gd-gold` border; hover and focus: `--gd-gold-deep` border and a soft `0 0 0 4px var(--gd-gold-soft)` glow, 200ms, with the standard focus outline kept. This glow is permitted on these four buttons only.
+> - **Entrance.** Once per card, when it first becomes interactive in the pinned story: `opacity 0 → 1`, `y: 16 → 0`, and the gold bar draws left to right (`scaleX 0 → 1`), 600ms, design-system ease. The rise never changes the track position. Reduced motion: at rest, bar drawn. Values and contrast are in build spec 5.4.
 
 ### 16.7 Screen 4 brochure panel
 

@@ -37,7 +37,7 @@
   --gd-line-soft: rgba(91, 72, 49, 0.12);
   --gd-shadow-soft: 0 14px 40px rgba(57, 43, 24, 0.08);
   --gd-shadow-tablet: 0 24px 48px rgba(57, 43, 24, 0.14); /* drop-shadow() on the Screen 3 tablet image */
-  --gd-shadow-card: 0 18px 48px rgba(57, 43, 24, 0.18), 0 2px 6px rgba(57, 43, 24, 0.10); /* Screen 2a memory panel and quote card */
+  --gd-shadow-card: 0 18px 48px rgba(57, 43, 24, 0.18), 0 2px 6px rgba(57, 43, 24, 0.10); /* Screen 2a memory panel and quote card; Screen 4 chapter cards */
 
   /* Type — unchanged */
   --gd-font-ui: "IBM Plex Sans", system-ui, sans-serif;
