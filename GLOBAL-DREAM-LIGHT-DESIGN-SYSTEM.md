@@ -84,6 +84,7 @@ Add these tokens to `css/tokens.css`. Reuse them instead of repeating raw values
   --gd-line-soft: rgba(91, 72, 49, 0.12);
   --gd-shadow-soft: 0 14px 40px rgba(57, 43, 24, 0.08);
   --gd-shadow-tablet: 0 24px 48px rgba(57, 43, 24, 0.14); /* drop-shadow() on the Screen 3 tablet image only */
+  --gd-shadow-card: 0 18px 48px rgba(57, 43, 24, 0.18), 0 2px 6px rgba(57, 43, 24, 0.10); /* Screen 2a memory panel and quote card only (approved 2026-10-01) */
 
   /* Type — unchanged */
   --gd-font-ui: "IBM Plex Sans", system-ui, sans-serif;
@@ -628,6 +629,8 @@ Approved with the Screen 3 rework (visual target `references/screen-3-target.png
 - **Tablet shadow.** The tablet image keeps its single depth shadow, `drop-shadow(var(--gd-shadow-tablet))` (Section 3). The glows above are the only other depth effects on the screen.
 - Gold remains the only accent in these visuals; no sky blue is used in them.
 
+> **Approved by the user on 2026-10-01 — extended to Screen 2a.** The connection visuals above also apply on Screen 2a, from 1200px up, as gold threads between the memory panel, Gia's tablet in the photo and the quote card. Screen 2a uses the same glow colour (it declares the same `--gd-connect-glow` value on its own section), the same 12px ringed nodes with a pulse ring and the same travelling 6px particle. Its threads are 1.5px rather than 2px, since they run over a photograph and sit close together; otherwise they follow the line rules above (`--gd-gold`, round caps, one `drop-shadow(0 0 4px …)` on the thread layer). Threads never cross a face or Gia on the tablet screen, and they are hidden wherever the cards leave the photo (below 1200px). Icon circles and the orbit decoration remain Screen 3 only. Geometry and timing are in build spec Section 5.2a ("Screen 2a rework").
+
 ### 16.10 Screens 2a and 2b photographs and product panels (approved 2026-10-01)
 
 Applies only to Screen 2a (photo, memory panel, quote card) and Screen 2b (photo, request panel, avatar, controls). Geometry, copy and timing are in build spec Sections 5.2a and 5.2b.
@@ -642,3 +645,12 @@ Applies only to Screen 2a (photo, memory panel, quote card) and Screen 2b (photo
 - **Quote card on dark (2b).** The `.gd-quote` component from 16.7 / build spec 5.4a.2 with dark values: `--gd-night-warm` background, 1px `--gd-night-line` border, role label in `--gd-gold`, quote in `--gd-night-text`, outcome line (if any) in `--gd-gold`. Same radius, padding and type as the light card.
 - **Switches (2b).** An approved exception to "no pill buttons" (Section 8.2), because a switch is not a button style: track 44×24px, radius 12px; on: `--gd-gold` track, 18px `--gd-night` thumb (5.5:1 against the track); off: transparent track, 1px `--gd-night-line` border, `--gd-night-text-3` thumb. Thumb moves by `transform`, 200ms. Focus ring `--gd-gold`, as for other controls on dark. Switches appear only on Screen 2b.
 - Sky blue is not used in either panel.
+
+> **Approved by the user on 2026-10-01 — Screen 2a rework.** For Screen 2a only, replacing the 2a values above:
+>
+> - **Memory panel (2a).** `--gd-surface-elevated`, 1px `--gd-gold-line` border, radius 8px, a 3px `--gd-gold` bar along the top edge inside the radius, `box-shadow: var(--gd-shadow-card)`; on the photo it adds a darker contact shadow `0 8px 24px` in `--gd-night` at 28%. Still solid, no blur, no gradient fill; maximum width 480px.
+> - **Memory rows (2a).** The marker is an 8px ring (2px `--gd-gold`) with a `--gd-gold` centre. A highlighted row has a `--gd-gold-soft` background, radius 4px, and its text in `--gd-gold-deep`, weight 500.
+> - **Quote card (2a).** `--gd-surface-elevated` background, 1px `--gd-gold` border, `box-shadow: var(--gd-shadow-card)`.
+> - **Gia avatar (2a).** `media/gia-avatar.webp` as a 40px circle with a 2px `--gd-gold` ring, in the role row of the 2a quote card. The 2b avatar keeps its 32px size and 1px `--gd-gold-line` ring.
+> - **Gold threads (2a).** Permitted on Screen 2a under 16.9.
+> - Photos: the 2a photo's entry scale-in is `1.08 → 1` (2b keeps `1.04 → 1`).

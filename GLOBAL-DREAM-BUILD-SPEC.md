@@ -56,7 +56,7 @@ Everything below is already prepared in the repository.
 /media/brochures/*.webp                    Eight brochure images (main + inline per brochure), extracted from the brochure PDF
 /media/gd-knows.webp                       Screen 2a photo: member at home with Gia on a tablet, 3640x2048, ~262KB (added 2026-10-01)
 /media/gd-side.webp                        Screen 2b photo: the same member with his phone at dusk, 2460x3072, ~181KB (added 2026-10-01)
-/media/gia-avatar.webp                     Screen 2b Gia avatar, 256x256, cropped from gd-knows.webp (added 2026-10-01)
+/media/gia-avatar.webp                     Screens 2a and 2b Gia avatar, 256x256, cropped from gd-knows.webp (added 2026-10-01; used on 2a since the 2a rework)
 /references/Global_Dream_Gia_Structure_EN.txt       Original content brief
 /references/oceanx-horizontal-story-reference.mp4   Screen 4 motion reference (third-party site, reference only)
 /references/oceanx-contact-sheet.jpg                1 frame per second of the reference
@@ -251,7 +251,7 @@ Reduced motion: rail complete (gold line full, all nodes active, all phrases vis
 
 1. Header block, left-aligned, max-width 720px: H2, body.
 2. Photo stage, 48px below the header (64px at 1200px and above): `<div class="gd-knows__stage">`, full container width, `aspect-ratio: 16 / 9`, radius 8px, `overflow: hidden` on the stage itself. The image fills it (`width: 100%; height: 100%; object-fit: cover; object-position: 35% 50%`). From 1200px up, the overlay column sits on the photo (see Overlays).
-3. Closing row, 48px below the stage: a grid `minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr)`, gap 32px, `align-items: end`: stage 1, stage 2, key line.
+3. Closing row, 48px below the stage: a grid `minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr)`, gap 32px, `align-items: end`: stage 1, stage 2, key line. (From 1200px up this row is replaced; see "Screen 2a rework" at the end of this section.)
 
 | Element | Copy | Style |
 |---|---|---|
@@ -269,9 +269,11 @@ There is no button on this screen. Screen 3 carries the next call to action, and
 
 **Overlays** (1200px and above). One overlay column (`.gd-knows__overlay`, `position: absolute`), inside the stage, right-aligned at an inset of 32px from the right, top and bottom edges of the stage, `width: min(30%, 360px)`, a flex column with the memory panel at the top and the quote card at the bottom, at least 16px apart. It must never cover the tablet or the man's face: verify at 1200, 1440 and 1920 that its left edge stays right of the tablet frame (about 70% of the stage width). If the two cards do not fit the stage height at some width, the quote card's outcome line may move outside the stage, never the panel rows. Below 1200px the overlays leave the photo (see Responsive).
 
+> **Approved (2026-10-01, task A9)** — the geometry above conflicted with its own rule: at `min(30%, 360px)` with a 32px right inset, the overlay's left edge sits at 67.1% of the stage at 1200, 1440 and 1920, covering the tablet frame and stand (which end at about 69.7%) by about 28px, and the two cards together reach the stage's bottom edge. At the user's choice it is replaced: from 1200px up **only the memory panel sits on the photo**, top-right at a 32px inset from the top and right edges, `width: min(calc(30% - 56px), 360px)` (about 275px), so its left edge stays 24px right of the tablet (measured 72.2% at 1200, 1440 and 1920). The **quote card sits under the stage**, 24px below it, right-aligned with the stage's right edge, `width: min(480px, 100%)`; the closing row follows 48px below the quote card. The `.gd-knows__overlay` wrapper is a sibling of the stage (not a child), so the stage still clips the photo's scale-in.
+
 **Memory panel** (`<figure class="gd-memory">`):
 
-- Surface `--gd-surface`, 1px `--gd-line`, radius 8px, padding 20px, `--gd-shadow-soft`. Solid, no transparency, no blur, no glow: the surface carries the contrast over the photo.
+- Surface `--gd-surface`, 1px `--gd-line`, radius 8px, padding 20px, `--gd-shadow-soft`. Solid, no transparency, no blur, no glow: the surface carries the contrast over the photo. (Superseded: surface, border, shadow and row style are now set by "Screen 2a rework" below.)
 - `<figcaption class="visually-hidden">`: `An example of what Gia remembers and how she uses it.`
 - Header: mono label `WHAT GIA REMEMBERS` (IBM Plex Mono 500, 11px, `0.12em`, uppercase, `--gd-text-secondary`), preceded by a 6px `--gd-gold` square, as on the Screen 4 chapter labels.
 - Memory list (`<ul class="gd-memory__list">`), 12px below the header. Each row: a 6px `--gd-gold` dot, then the text in small body (14px), `--gd-text-primary`; 8px vertical and 8px horizontal padding; radius 4px on the row so the highlight has soft corners; 1px `--gd-line-soft` divider between rows.
@@ -284,7 +286,7 @@ There is no button on this screen. Screen 3 carries the next call to action, and
 | 4 | `Daughter starts school in September` |
 | 5 | `Works from home three days a week` |
 
-**Quote card.** The brochure quote card component `.gd-quote` exactly as specified in Section 5.4a.2 (role label, quote, outcome line), on its `--gd-bg` background, padding reduced to 20px 24px inside the overlay. Gia is already visible on the tablet in the photo, so this card has no avatar.
+**Quote card.** The brochure quote card component `.gd-quote` exactly as specified in Section 5.4a.2 (role label, quote, outcome line), on its `--gd-bg` background, padding reduced to 20px 24px inside the overlay. Gia is already visible on the tablet in the photo, so this card has no avatar. (Superseded: the card now has an elevated surface and Gia's avatar; see "Screen 2a rework" below.)
 
 | Element | Copy |
 |---|---|
@@ -312,11 +314,49 @@ No ambient loop. The screen comes to rest. The photo is not pinned and has no pa
 
 Reduced motion: everything visible at rest, rows 2–4 highlighted, no animation.
 
+(Superseded: the trigger, the timings above and the "no ambient loop" rule are replaced by the motion in "Screen 2a rework" below.)
+
 **Responsive.**
 
 - 1199px to 769px: the overlays leave the photo. Under the stage, 24px below it, the memory panel and the quote card sit side by side in a 2-column grid (gap 24px, `align-items: start`), then the closing row.
 - 768px and below: the stage becomes `aspect-ratio: 4 / 3` with `object-position: 40% 50%` so the man and the tablet both stay in frame; the panel and the quote card stack under it (gap 16px), full container width; the closing row stacks (stages in 2 columns, then the key line; below 480px everything in one column, 24px gaps).
 - Verify at 1920, 1440, 1200, 1024, 768 and 375 that neither the man's face nor Gia on the tablet is cropped out or covered.
+
+> **Approved (2026-10-01, task A9)** — "full container width" at 768px and below conflicted with the 480px panel maximum in design-system 16.10. At the user's choice the design system applies: the memory panel and the quote card are at most 480px wide at every width, left-aligned when stacked (full width only where the container is narrower than 480px).
+
+> **Approved by the user on 2026-10-01 — Screen 2a rework.** The user reviewed the built screen and rejected it as pale, low in contrast, without visible motion and with an empty area under the photo. The changes below apply to Screen 2a only and override the conflicting parts of this section. The copy is unchanged.
+>
+> **Layout, 1200px and above.** The separate closing row is removed. Under the photo, 32px below it, one row: grid `minmax(0, 1fr) minmax(0, 420px)`, gap 48px, `align-items: start`. Left: the two stages side by side (gap 32px), and the key line under them (24px gap). Right: the quote card, full column width, its right edge on the photo's right edge. No empty area remains under the photo. The memory panel keeps its place on the photo (top-right, 32px inset, `width: min(calc(30% - 56px), 360px)`). The closing row moved into `.gd-knows__visual`, which becomes this grid; the overlay wrapper uses `display: contents`. Below 1200px the stacked order is unchanged: photo, memory panel and quote card, closing row.
+>
+> **Contrast and depth.** New token `--gd-shadow-card` (design-system Section 3).
+>
+> - Memory panel: background `--gd-surface-elevated`, 1px `--gd-gold-line` border, a 3px `--gd-gold` bar along its top edge (a background layer, so the radius clips it), `box-shadow: var(--gd-shadow-card)`. On the photo (1200px and up) it adds a darker contact shadow `0 8px 24px rgba(21,24,28,.28)` (written as `--gd-night` at 28%); under the photo it keeps `--gd-shadow-card` only.
+> - Memory rows: the dot becomes an 8px ring (2px `--gd-gold`) with a `--gd-gold` centre. Highlighted rows 2–4: `--gd-gold-soft` background, text `--gd-gold-deep`, weight 500. The weight change does not rewrap any row (heights measured equal in both states at 1920, 1200 and 375).
+> - Quote card: background `--gd-surface-elevated`, 1px `--gd-gold` border, `box-shadow: var(--gd-shadow-card)`. Its role row shows Gia's avatar (`media/gia-avatar.webp`, 40px circle, 2px `--gd-gold` ring, `alt=""`) 10px before the `GIA` label.
+> - Measured contrast: `--gd-text-primary` on `--gd-surface-elevated` 15.8:1; `--gd-text-secondary` (panel label) 7.2:1; `--gd-gold-deep` (outcome line) 5.9:1; `--gd-gold-deep` on a highlighted row (`--gd-gold-soft` over white) 5.1:1.
+>
+> **Gold threads** (1200px and above; design-system 16.9 extended to Screen 2a). One decorative SVG `.gd-knows__threads` (`aria-hidden`, `pointer-events: none`) covers the photo and the row under it, above the photo and below both cards.
+>
+> - Tablet node: the Screen 3 tablet node (12px ringed dot) with a pulse ring, on the tablet's right frame edge at the vertical centre of its screen. Measured on the image: the frame leans, so its right edge at the screen's centre is at **68.2% of the image width and 53.5% of its height** (the 69.7% in the brief is the frame's top-right corner; 52% was approximate). The measured position was approved by the user on 2026-10-01. The point is mapped through the `object-fit: cover` crop of the rendered photo; recomputed after the image and fonts load and on resize (debounced 150ms).
+> - Row threads: one per memory row, from the panel's left edge at the row's vertical centre to the tablet node; a cubic curve with horizontal tangents at both ends whose control points stay between its ends, so it never reaches over the tablet screen. 1.5px `--gd-gold`, round caps, glow `drop-shadow(0 0 4px)` in the Screen 3 glow colour. Rows 2–4 at full opacity, rows 1 and 5 at 35%.
+> - Card thread: from the tablet's bottom frame edge (62% of the image width, 74.7% of its height) down to the quote card's top border, a vertical S-curve in the same style, ending in a 12px ringed node centred on the card's top border above the avatar (an HTML node inside the card, so it moves with it).
+> - No thread crosses Gia's face or the man's face (verified at 1200, 1440 and 1920).
+>
+> **Motion** (`js/gia-knows.js`), triggered once when the stage is 25% visible:
+>
+> | Time | Event |
+> |---:|---|
+> | 0.0s | Photo `opacity 0 → 1`, `scale 1.08 → 1`, 1600ms, design-system ease |
+> | 0.5s | Memory panel `opacity 0 → 1`, `x: 40 → 0`, 700ms |
+> | 0.9s–2.1s | Rows 1–5 in order, 300ms apart: `opacity 0 → 1`, `x: 16 → 0`, 500ms; each row's thread draws (`stroke-dashoffset`) from the row to the tablet over 600ms, starting 200ms after its row |
+> | 2.6s | Tablet node pops in (`scale 0 → 1`, `back.out(2.5)`) with one pulse ring (`scale 1 → 2.6`, `opacity .6 → 0`, 700ms); rows 2–4 highlight 120ms apart |
+> | 3.2s | The tablet-to-card thread draws downward over 700ms |
+> | 3.9s | Quote card `opacity 0 → 1`, `y: 32 → 0`, `scale .97 → 1`, 700ms; its top node pops in |
+> | 4.6s | Outcome line, sentence by sentence, 250ms apart |
+>
+> Ambient, after the sequence, only while the section is visible (paused off-screen): every 3.5s a 6px glowing `--gd-gold` particle travels along the thread of row 2, 3 or 4 (cycling 2 → 3 → 4) to the tablet, 1.2s, ease-in-out, via `getPointAtLength`; the tablet node pulses once when it arrives.
+>
+> Reduced motion: everything at rest and visible, threads drawn, rows highlighted, no particle, no pulse. Below 1200px (cards under the photo): no threads and no nodes; the rest of the motion is unchanged. The section clips horizontal overflow (`overflow-x: clip`) so the panel's slide-in never causes page scrolling; no sticky stage lives inside it.
 
 ---
 
@@ -809,7 +849,7 @@ No registration or login dialogs on this page unless a later prompt adds them.
 | Gia tablet | 3 | `media/gia-tablet.webp` | Static image, animated only by transforms and overlays |
 | Walk video | 4 | `media/gd-walk.mp4` (+ `gd-walk-poster.jpg`) | Blob-loaded, scroll-scrubbed across the 650vh runway |
 | Logo | Shell | `media/logo/gd-lockup-light.webp`, `gd-emblem-light.webp` | Header and footer; never recoloured |
-| Screen 2a photo | 2a | `media/gd-knows.webp` | Lazy static image; scale-in once on entry |
+| Screen 2a photo and avatar | 2a | `media/gd-knows.webp`, `media/gia-avatar.webp` | Lazy static images; the photo scales in once on entry |
 | Screen 2b photo and avatar | 2b | `media/gd-side.webp`, `media/gia-avatar.webp` | Lazy static images; scale-in once on entry |
 | Brochure images | 5.4a | `media/brochures/b-{homes,finances,moving,possibilities}-{main,inline}.webp` | Loaded on first open of each brochure (`data-src` → `src`); ~680KB total |
 
@@ -825,8 +865,8 @@ Weight budget: videos ~15.8MB (hero ~5.5MB, walk ~10.3MB), brochure images ~0.7M
 
 1. Pinned sections: Screen 1 and Screen 4 only. No parallax, no scroll hijacking, no scroll snapping, no page-level horizontal scroll.
 2. All scroll-driven motion is a pure function of progress and fully reversible on upward scroll.
-3. One `requestAnimationFrame` loop per pinned screen, started when its section is within one viewport of the visible area and stopped when it is further away. Ambient loops on Screens 2 and 3 pause off-screen. (Screens 2a and 2b have no ambient loops.)
-4. Animate `transform` and `opacity` only (plus `stroke-dashoffset` for Screen 3 lines and `scaleY`/`scaleX` for rails and progress). Never animate layout properties.
+3. One `requestAnimationFrame` loop per pinned screen, started when its section is within one viewport of the visible area and stopped when it is further away. Ambient loops on Screens 2 and 3 pause off-screen. (Screen 2b has no ambient loop. Approved 2026-10-01: Screen 2a has one, the thread particle, which also pauses off-screen.)
+4. Animate `transform` and `opacity` only (plus `stroke-dashoffset` for Screen 3 lines and Screen 2a threads and `scaleY`/`scaleX` for rails and progress). Never animate layout properties.
 5. `prefers-reduced-motion: reduce`: complete, readable, static composition on every screen as specified per screen.
 6. Semantics: one `<h1>` (Screen 1). `<h2>` per screen. `<h3>` for Screen 2 rail phrases, Screen 3 areas, and Screen 4 modules. Links that navigate are `<a>`; controls that open brochures are `<button>`. **Approved (2026-10-01):** the Screen 2b switches are `<button type="button" role="switch" aria-checked>`, each labelled by its row text; the 2a and 2b panels are `<figure>` elements with a visually hidden `<figcaption>`.
 7. Keyboard: visible focus rings, logical tab order, no positive `tabindex`, no focus on invisible content (`inert` rules above).
@@ -843,7 +883,7 @@ Weight budget: videos ~15.8MB (hero ~5.5MB, walk ~10.3MB), brochure images ~0.7M
 - [ ] Every visible string matches Section 5 character for character; every missing string is a listed TODO.
 - [ ] Screen 1 scrubs smoothly, text blocks never overlap, block 3 and `Meet Gia` hold to the end, the button is only interactive when visible.
 - [ ] Screen 2 is the only dark section; its rail completes once and its ambient dot pauses off-screen. (Since 2026-10-01: Screens 2 and 2b are the only dark sections and are never adjacent.)
-- [ ] Screen 2a memory rows appear in order, rows 2–4 highlight before the quote card, the outcome line appears sentence by sentence; nothing loops.
+- [ ] Screen 2a memory rows appear in order with their threads, rows 2–4 highlight before the quote card, the outcome line appears sentence by sentence; from 1200px up the only loop is the thread particle, paused off-screen.
 - [ ] Screen 2b request rows resolve in order, no red is used, the switches toggle by mouse, touch and keyboard (Space and Enter) and announce their state; nothing is saved.
 - [ ] Screen 3 areas appear in order 1–5, lines stay attached to the tablet at every width above 1100px, and the stacked layout replaces lines below it.
 - [ ] Screen 4 matches the reference mechanics: scrubbed walking video, chapters on one continuous track entering from the right and exiting to the left, progress line, counter, simulated pull-back, final CTA with no exit. Chapter cards cross Gia's safe band only while moving; the final CTA card at rest stays clear of it.
